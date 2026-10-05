@@ -1,4 +1,4 @@
-# gamebox
+# gameshelf
 Full-stack social platform for discovering, reviewing, and tracking video games using Spring Boot and React.
 MVP (Must Have)
 
