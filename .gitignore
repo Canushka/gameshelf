@@ -1,0 +1,32 @@
+# Java / Spring Boot
+target/
+*.class
+*.jar
+*.war
+*.log
+
+# Node / React
+node_modules/
+dist/
+.vite/
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Spring Boot local configuration
+backend/src/main/resources/application.properties
