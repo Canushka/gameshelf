@@ -90,10 +90,17 @@ Anushka
 B.Tech — Electrical Engineering
 Interested in full-stack development, Java, Spring Boot and data-driven applications.
 
+---
+
 ##Connect
 - GitHub: @Canushka
+- LinkedIn: https://www.linkedin.com/in/anushka-chatterjee-624877305/
+
+---
 ##📄 License
 This project is currently intended as a personal portfolio and learning project.
+
+---
 ##⭐ Acknowledgements
 - IGDB — Game data and artwork
 - Spring Boot
