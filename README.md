@@ -92,16 +92,16 @@ Interested in full-stack development, Java, Spring Boot and data-driven applicat
 
 ---
 
-##Connect
+## Connect
 - GitHub: @Canushka
 - LinkedIn: https://www.linkedin.com/in/anushka-chatterjee-624877305/
 
 ---
-##📄 License
+## 📄 License
 This project is currently intended as a personal portfolio and learning project.
 
 ---
-##⭐ Acknowledgements
+## ⭐ Acknowledgements
 - IGDB — Game data and artwork
 - Spring Boot
 - React
