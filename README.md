@@ -85,52 +85,20 @@ The project combines a modern cinematic gaming interface with a RESTful Spring B
 | JavaScript | Frontend logic |
 
 ---
-
-## 🏗️ Architecture
-
-```text
-                         ┌─────────────────────┐
-                         │       React         │
-                         │       + Vite        │
-                         │    Tailwind CSS     │
-                         └──────────┬──────────┘
-                                    │
-                                    │ REST API
-                                    ▼
-                         ┌─────────────────────┐
-                         │    Spring Boot     │
-                         │                     │
-                         │ Controllers         │
-                         │ Services            │
-                         │ Security / JWT      │
-                         │ JPA / Hibernate     │
-                         └───────┬───────┬─────┘
-                                 │       │
-                    ┌────────────┘       └─────────────┐
-                    ▼                                  ▼
-          ┌──────────────────┐               ┌──────────────────┐
-          │   PostgreSQL     │               │      IGDB        │
-          │                  │               │      API         │
-          │ Users            │               │                  │
-          │ Games            │               │ Game information │
-          │ Libraries        │               │ Artwork          │
-          │ Reviews          │               │ Genres           │
-          │ Favourites       │               │ Platforms        │
-          │ Follows          │               │ Ratings          │
-          └──────────────────┘               └──────────────────┘
-
-👩‍💻 Author
+## 👩‍💻 Author
 Anushka
 B.Tech — Electrical Engineering
 Interested in full-stack development, Java, Spring Boot and data-driven applications.
-Connect
+
+##Connect
 - GitHub: @Canushka
-📄 License
+##📄 License
 This project is currently intended as a personal portfolio and learning project.
-⭐ Acknowledgements
+##⭐ Acknowledgements
 - IGDB — Game data and artwork
 - Spring Boot
 - React
 - Vite
 - PostgreSQL
 - Tailwind CSS
+
