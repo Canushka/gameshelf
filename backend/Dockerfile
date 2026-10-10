@@ -5,6 +5,7 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
+RUN cp src/main/resources/application.properties.example src/main/resources/application.properties
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jre
