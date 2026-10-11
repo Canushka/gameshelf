@@ -10,7 +10,7 @@ export default function Login({ onLogin }) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
-
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
