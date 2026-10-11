@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +7,14 @@ export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    if (!email || !password) {
+  const handleSubmit = async () => {
+    if (!email.trim() || !password) {
       setError("Please enter email and password");
       return;
     }
@@ -19,20 +22,40 @@ export default function Login({ onLogin }) {
     try {
       setLoading(true);
       setError("");
+      setMessage("");
 
-      const res = await api.post("/auth/login", {
-        email,
-        password,
-      });
+      if (isRegister) {
+        await api.post("/auth/register", {
+          username: username.trim(),
+          email: email.trim(),
+          password,
+        });
 
-      localStorage.setItem("token", res.data.token);
+        setMessage("Account created! You can now sign in.");
+        setIsRegister(false);
+        setPassword("");
+      } else {
+        const res = await api.post("/auth/login", {
+          email: email.trim(),
+          password,
+        });
 
-      if (onLogin) onLogin();
+        localStorage.setItem("token", res.data.token);
 
-      navigate("/search");
+        if (onLogin) onLogin();
 
+        navigate("/search");
+      }
     } catch (err) {
-      setError("Invalid email or password");
+      if (err.response?.status === 409) {
+        setError("This email is already registered.");
+      } else if (isRegister) {
+        setError(
+          err.response?.data || "Registration failed. Please try again."
+        );
+      } else {
+        setError("Invalid email or password");
+      }
     } finally {
       setLoading(false);
     }
@@ -41,8 +64,6 @@ export default function Login({ onLogin }) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-950 to-black text-gray-200">
       <div className="w-full max-w-md bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl p-8">
-
-        {/* Logo */}
         <div className="text-center mb-8">
           <div className="text-3xl font-bold text-violet-400 tracking-widest">
             GameShelf
@@ -52,19 +73,40 @@ export default function Login({ onLogin }) {
           </p>
         </div>
 
-        {/* Error */}
         {error && (
           <div className="bg-red-900/40 border border-red-800 text-red-300 p-2 rounded-lg mb-4 text-sm">
             {error}
           </div>
         )}
 
-        {/* Email */}
+        {message && (
+          <div className="bg-green-900/40 border border-green-800 text-green-300 p-2 rounded-lg mb-4 text-sm">
+            {message}
+          </div>
+        )}
+
+    {isRegister && (
+      <div className="mb-4">
+        <label className="block text-sm text-gray-400 mb-1">
+          Username
+        </label>
+        <input
+          type="text"
+          required
+          className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-600 transition"
+          placeholder="Choose a username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </div>
+    )}
+
         <div className="mb-4">
           <label className="block text-sm text-gray-400 mb-1">
             Email
           </label>
           <input
+            type="email"
             className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-600 transition"
             placeholder="you@example.com"
             value={email}
@@ -72,7 +114,6 @@ export default function Login({ onLogin }) {
           />
         </div>
 
-        {/* Password */}
         <div className="mb-6">
           <label className="block text-sm text-gray-400 mb-1">
             Password
@@ -80,16 +121,15 @@ export default function Login({ onLogin }) {
           <input
             type="password"
             className="w-full bg-slate-900 border border-slate-800 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-600 transition"
-            placeholder="••••••••"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
         </div>
 
-        {/* Button */}
         <button
-          onClick={handleLogin}
+          onClick={handleSubmit}
           disabled={loading}
           className={`w-full py-3 rounded-xl font-medium transition ${
             loading
@@ -97,10 +137,30 @@ export default function Login({ onLogin }) {
               : "bg-violet-600 hover:bg-violet-700"
           }`}
         >
-          {loading ? "Signing in..." : "Sign In"}
+          {loading
+            ? isRegister
+              ? "Creating account..."
+              : "Signing in..."
+            : isRegister
+              ? "Create Account"
+              : "Sign In"}
         </button>
 
-        {/* Footer */}
+        <p className="text-center text-sm text-gray-400 mt-5">
+          {isRegister ? "Already have an account?" : "New to GameShelf?"}{" "}
+          <button
+            type="button"
+            className="text-violet-400 hover:text-violet-300 font-medium"
+            onClick={() => {
+              setIsRegister(!isRegister);
+              setError("");
+              setMessage("");
+            }}
+          >
+            {isRegister ? "Sign In" : "Sign Up"}
+          </button>
+        </p>
+
         <div className="text-center text-sm text-gray-500 mt-6">
           Built with ❤️ for gamers
         </div>
